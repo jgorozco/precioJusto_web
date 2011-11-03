@@ -16,7 +16,7 @@ class JSONUtils(object):
         return m
 
     @staticmethod
-    def createOrUpdateDbElementsFromDICT(localDict):
+    def createOrUpdateDbElementsFromDICT(localDict,putIntoDB):
         obj=None
         if localDict.has_key('id'):
             localId=str(localDict['id'])
@@ -48,12 +48,14 @@ class JSONUtils(object):
                     logging.info('ErrorExcp::'+str(e))
                     setattr(obj, attrName, User(putValue))
                 finally:   
-                    obj.put()        
+                    if putIntoDB:
+                        obj.put()
+                    #return obj        
         return obj
 
     @staticmethod
-    def dumpAnyJSONInDB(JsonData):
-        return JSONUtils.createOrUpdateDbElementsFromDICT(simplejson.loads(JsonData))
+    def dumpAnyJSONInDB(JsonData,putIntoDB):
+        return JSONUtils.createOrUpdateDbElementsFromDICT(simplejson.loads(JsonData),putIntoDB)
         
         
     @staticmethod    

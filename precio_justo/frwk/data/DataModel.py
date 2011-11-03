@@ -1,11 +1,17 @@
 from google.appengine.ext import db
 
- 
+class advModel(db.Model):
+    
+    def __cmp__(self,other):
+        return str(self._entity)!=str(other._entity)
+      
 class UserData(db.Model):
     myUser=db.UserProperty()
     nickUser= db.StringProperty()
     totalScore=db.FloatProperty()
     monthScore=db.FloatProperty()
+    actualMonth=db.StringProperty()
+    
     
     
 class UserAchievements(db.Model):
@@ -13,7 +19,7 @@ class UserAchievements(db.Model):
     achievement=db.StringProperty()       
 
     
-class Bid(db.Model):
+class Bid(advModel):
     userPropietary=db.UserProperty()
     urlPhoto=db.StringProperty()
     timeStamp=db.FloatProperty()
@@ -21,6 +27,8 @@ class Bid(db.Model):
     description=db.StringProperty()
     price=db.FloatProperty()
     rand1=db.FloatProperty()
+    
+   
     
 class BidResult(db.Model):
     userBidder=db.UserProperty()

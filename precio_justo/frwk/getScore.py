@@ -1,5 +1,5 @@
 from frwk.data import Constants, JSONUtils
-from frwk.data.DataModel import UserData, Bid, BidResult
+from frwk.data.DataModel import UserData, Bid, BidResult, UserAchievements
 from google.appengine.api import users
 from google.appengine.ext import webapp
 import logging
@@ -9,7 +9,6 @@ import time
 class getScore(webapp.RequestHandler):
     
     def get(self):
-        user= users.get_current_user()
         returned=Constants.ERROR_NO_USER
         listArguments=self.request.arguments()
         if len(listArguments)>0:
@@ -35,14 +34,31 @@ class getScore(webapp.RequestHandler):
   
         
     def getUserDataScore(self):
-        return ''
+        user = users.get_current_user()
+        returned=Constants.ERROR_NO_USER
+        if user :
+            myUserData=UserData.gql("WHERE myUser = :1",user)  
+            userData=None
+            if myUserData.count()>0:
+                userData=myUserData.get()
+                returned=JSONUtils.JSONUtils.serializeAnyObjToJSON(userData)
+            else :
+                returned=Constants.ERROR_BAD_USER
+        return returned
     
     def getArchievements(self):
-        return ''
+        user = users.get_current_user()
+        returned=Constants.ERROR_NO_USER
+        if user :
+            archievements=UserAchievements.gql("WHERE user = :1",user)  
+            returned=JSONUtils.JSONUtils.serializeAnyObjToJSON(archievements)
+        return returned
     
     def getTotalRanking(self):
-        return ''
+        users=UserData.gql("WHERE totalScore>0.0 ORDER BY totalScore DESC LIMIT 50 ").fetch(50, 0)
+        return JSONUtils.JSONUtils.serializeAnyObjToJSON(users)
     
     def getMonthRanking(self):
-        return ''
+        users=UserData.gql("WHERE monthScore>0.0 ORDER BY monthScore DESC LIMIT 50 ").fetch(50, 0)
+        return JSONUtils.JSONUtils.serializeAnyObjToJSON(users)
         
