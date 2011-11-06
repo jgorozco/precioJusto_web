@@ -5,7 +5,7 @@ class advModel(db.Model):
     def __cmp__(self,other):
         return str(self._entity)!=str(other._entity)
       
-class UserData(db.Model):
+class UserData(advModel):
     myUser=db.UserProperty()
     nickUser= db.StringProperty()
     totalScore=db.FloatProperty()
@@ -14,7 +14,7 @@ class UserData(db.Model):
     
     
     
-class UserAchievements(db.Model):
+class UserAchievements(advModel):
     user=db.UserProperty()
     achievement=db.StringProperty()       
 
@@ -26,11 +26,10 @@ class Bid(advModel):
     urlData=db.StringProperty()
     description=db.StringProperty()
     price=db.FloatProperty()
-    rand1=db.FloatProperty()
     
    
     
-class BidResult(db.Model):
+class BidResult(advModel):
     userBidder=db.UserProperty()
     bidBidder=db.ReferenceProperty(Bid)
     bidPrice=db.FloatProperty()

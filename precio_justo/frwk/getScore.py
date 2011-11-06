@@ -30,7 +30,7 @@ class getScore(webapp.RequestHandler):
         self.response.out.write(returned)
         
     def getGlobalTime(self):
-        return '{ "timelstamp": "'+str(time.time())+'"}'
+        return '{ "timestamp": "'+str(time.time())+'"}'
   
         
     def getUserDataScore(self):

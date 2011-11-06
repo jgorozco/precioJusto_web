@@ -23,7 +23,8 @@ class MainPage(webapp.RequestHandler):
 
 
 application = webapp.WSGIApplication([('/', MainPage),
-                                      ('/getBids', getBid),#TODO
+                                   #   ('/newUser', newUser)
+                                      ('/getBids', getBid),
                                       ('/setBidPrize', setBidPrize),
                                       ('/uploadBid', uploadBid),
                                       ('/getScore', getScore)], debug=True)

@@ -2,7 +2,6 @@ from frwk.data import Constants, JSONUtils
 from frwk.data.DataModel import Bid
 from google.appengine.api import users
 from google.appengine.ext import webapp
-import random
 import time
 from google.appengine.ext.key_range import simplejson
 
@@ -23,7 +22,6 @@ class uploadBid(webapp.RequestHandler):
                 returnedData=Constants.ERROR_BAD_USER
             else :
                 bidRecived['timeStamp']=time.time()+bidRecived['timeStamp']
-                bidRecived['rand1']=random.random()
                 returned=Bid(JSONUtils.JSONUtils.createOrUpdateDbElementsFromDICT(bidRecived,True))
                 #TODO soporte a archievements
                 if returned :
