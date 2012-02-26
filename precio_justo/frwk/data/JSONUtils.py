@@ -23,11 +23,14 @@ class JSONUtils(object):
             nameId=localId.split(':')[0]
             classObject=localId.split(':')[1]
             dbModel = JSONUtils.get_class( 'frwk.data.DataModel.'+classObject )
-            obj=dbModel().get_by_id(long(nameId))
+            if nameId=="":
+                #logging.info('estado 1');
+                obj=dbModel()
+            else:
+                #logging.info('estado 2');
+                obj=dbModel().get_by_id(long(nameId))
         else :
-            return None
-        if obj==None : #create obj
-            obj=dbModel()      
+            return None;    
         for attrName in localDict.keys() :
             attrValue=localDict.get(attrName)
             putValue=attrValue
@@ -47,11 +50,16 @@ class JSONUtils(object):
                 except Exception,e :
                     logging.info('ErrorExcp::'+str(e))
                     setattr(obj, attrName, User(putValue))
-                finally:   
-                    if putIntoDB:
-                        obj.put()
-                    #return obj        
-        return obj
+                #finally:  
+                     
+                    #logging.info('saved::')
+                    #return obj     
+        if putIntoDB:
+            key=obj.put()
+            logging.info(key)
+            return key
+        else:
+            return obj
 
     @staticmethod
     def dumpAnyJSONInDB(JsonData,putIntoDB):

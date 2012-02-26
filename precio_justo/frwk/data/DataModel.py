@@ -16,13 +16,13 @@ class UserData(advModel):
     
 class UserAchievements(advModel):
     user=db.UserProperty()
-    achievement=db.StringProperty()       
-
+    achievement=db.StringProperty()    
+       
     
 class Bid(advModel):
-    userPropietary=db.UserProperty()
+    userPropietary=db.StringProperty()
     urlPhoto=db.StringProperty()
-    timeStamp=db.FloatProperty()
+    timeStamp=db.IntegerProperty()
     urlData=db.StringProperty()
     description=db.StringProperty()
     price=db.FloatProperty()
